@@ -4,9 +4,9 @@ import (
 	"bufio"
 	"bytes"
 	"strconv"
+	"github.com/chrholme/go-syslog/internal/syslogparser/rfc3164"
+	"github.com/chrholme/go-syslog/internal/syslogparser/rfc5424"
 
-	"gopkg.in/mcuadros/go-syslog.v2/internal/syslogparser/rfc3164"
-	"gopkg.in/mcuadros/go-syslog.v2/internal/syslogparser/rfc5424"
 )
 
 /* Selecting an 'Automatic' format detects incoming format (i.e. RFC3164 vs RFC5424) and Framing
