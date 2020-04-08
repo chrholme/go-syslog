@@ -1,6 +1,7 @@
 go-syslog [![Build Status](https://travis-ci.org/mcuadros/go-syslog.svg?branch=master)](https://travis-ci.org/mcuadros/go-syslog) [![GoDoc](https://godoc.org/github.com/mcuadros/go-syslog?status.svg)](https://godoc.org/gopkg.in/mcuadros/go-syslog.v2) [![GitHub release](https://img.shields.io/github/release/mcuadros/go-syslog.svg)](https://github.com/mcuadros/go-syslog/releases)
 ==============================
-
+Forked from mcuadros/go-syslog
+Small change to support parsing of Unix Epoch timestamps present in Meraki logs.
 Syslog server library for go, build easy your custom syslog server over UDP, TCP or Unix sockets using RFC3164, RFC6587 or RFC5424
 
 Installation
@@ -9,7 +10,7 @@ Installation
 The recommended way to install go-syslog
 
 ```
-go get gopkg.in/mcuadros/go-syslog.v2
+go get github.com/chrholme/go-syslog
 ```
 
 Examples
@@ -18,7 +19,7 @@ Examples
 How import the package
 
 ```go
-import "gopkg.in/mcuadros/go-syslog.v2"
+import "github.com/chrholme/go-syslog"
 ```
 
 Example of a basic syslog [UDP server](example/basic_udp.go):
