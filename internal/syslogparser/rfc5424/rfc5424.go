@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/chrholme/go-syslog/internal/syslogparser"
@@ -201,7 +202,14 @@ func (p *Parser) parseTimestamp() (time.Time, error) {
 		p.cursor++
 		return ts, nil
 	}
-
+	// try to parse out a Unix timestamp in case this is a Meraki message
+	tmpCursor := p.cursor //Store current position so we can reset on no match
+	ts1, err := parseUnixTime(p.buff, &p.cursor, p.l)
+	if err == nil {
+		p.cursor++
+		return ts1, nil
+	}
+    p.cursor = tmpCursor
 	fd, err := parseFullDate(p.buff, &p.cursor, p.l)
 	if err != nil {
 		return ts, err
@@ -266,6 +274,26 @@ func (p *Parser) parseStructuredData() (string, error) {
 // ----------------------------------------------
 
 // XXX : bind them to Parser ?
+
+// UNIX time
+func parseUnixTime(buff []byte, cursor *int, l int)(time.Time, error){
+	var ts time.Time
+	//1586197223.148263514
+	timelen := 20
+	if *cursor+timelen > l {
+		return ts, syslogparser.ErrEOL
+	}
+	sub := string(buff[*cursor : *cursor+timelen])
+	*cursor += timelen
+	timeparts := strings.Split(sub, ".")
+	sec, err := strconv.ParseInt(timeparts[0],10,64)
+	if err != nil {
+		return ts, err
+	}
+	nano, err := strconv.ParseInt(timeparts[1],10,64)
+	ts = time.Unix(sec,nano)
+	return ts, nil
+}
 
 // FULL-DATE : DATE-FULLYEAR "-" DATE-MONTH "-" DATE-MDAY
 func parseFullDate(buff []byte, cursor *int, l int) (fullDate, error) {

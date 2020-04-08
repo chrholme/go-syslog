@@ -248,6 +248,13 @@ func (s *Rfc5424TestSuite) TestParseHeader_Valid(c *C) {
 	}
 }
 
+func ( s *Rfc5424TestSuite) TestParseTimestamp_UNIX(c *C) {
+	buff := []byte("1586197223.520000000")
+	ts := time.Date(2020,time.April, 6,14,20,23,52*10e6, time.Local)
+
+	s.assertTimestamp(c, ts , buff, 21, nil)
+}
+
 func (s *Rfc5424TestSuite) TestParseTimestamp_UTC(c *C) {
 	buff := []byte("1985-04-12T23:20:50.52Z")
 	ts := time.Date(1985, time.April, 12, 23, 20, 50, 52*10e6, time.UTC)
