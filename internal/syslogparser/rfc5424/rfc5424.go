@@ -209,7 +209,7 @@ func (p *Parser) parseTimestamp() (time.Time, error) {
 		p.cursor++
 		return ts1, nil
 	}
-    p.cursor = tmpCursor
+	p.cursor = tmpCursor
 	fd, err := parseFullDate(p.buff, &p.cursor, p.l)
 	if err != nil {
 		return ts, err
@@ -276,7 +276,7 @@ func (p *Parser) parseStructuredData() (string, error) {
 // XXX : bind them to Parser ?
 
 // UNIX time
-func parseUnixTime(buff []byte, cursor *int, l int)(time.Time, error){
+func parseUnixTime(buff []byte, cursor *int, l int) (time.Time, error) {
 	var ts time.Time
 	//1586197223.148263514
 	timelen := 20
@@ -286,12 +286,12 @@ func parseUnixTime(buff []byte, cursor *int, l int)(time.Time, error){
 	sub := string(buff[*cursor : *cursor+timelen])
 	*cursor += timelen
 	timeparts := strings.Split(sub, ".")
-	sec, err := strconv.ParseInt(timeparts[0],10,64)
+	sec, err := strconv.ParseInt(timeparts[0], 10, 64)
 	if err != nil {
 		return ts, err
 	}
-	nano, err := strconv.ParseInt(timeparts[1],10,64)
-	ts = time.Unix(sec,nano)
+	nano, err := strconv.ParseInt(timeparts[1], 10, 64)
+	ts = time.Unix(sec, nano)
 	return ts, nil
 }
 
