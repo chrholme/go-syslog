@@ -155,7 +155,7 @@ func (p *Parser) parseTimestamp() (time.Time, error) {
 func (p *Parser) parseHostname() (string, error){
 	var hostname string
 	log := string(p.buff)
-	re := regexp.MustCompile(`([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}_\w+)`)
+	re := regexp.MustCompile(`([0-9a-f]{8}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{4}_[0-9a-f]{12}\w*)`)
 	hostname = re.FindString(log)
 	if hostname == "" {
 		return hostname, ErrHostnameNotFound
